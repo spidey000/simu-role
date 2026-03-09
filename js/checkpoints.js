@@ -27,6 +27,11 @@ export class Checkpoints {
       insertTextBtn.addEventListener('click', () => this.insertText());
     }
 
+    // Listen for standalone checkpoint creation from toolbar
+    this.board.addEventListener('addStandaloneCheckpoint', () => {
+      this.addCheckpoint();
+    });
+
     this.board.addEventListener('click', (e) => {
       if (e.target === this.board || e.target === this.board.querySelector('#bg')) {
         this.selected = null;

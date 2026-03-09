@@ -56,6 +56,12 @@ export class Controls {
         <button id="moveUpBtn" title="Mover Arriba">⬆️</button>
         <button id="moveDownBtn" title="Mover Abajo">⬇️</button>
       </div>
+      <div style="display:flex;align-items:center;gap:2px;">
+        <button id="rotateNBtn" title="Norte" data-dir="N">N</button>
+        <button id="rotateEBtn" title="Este" data-dir="E">E</button>
+        <button id="rotateSBtn" title="Sur" data-dir="S">S</button>
+        <button id="rotateWBtn" title="Oeste" data-dir="W">W</button>
+      </div>
     `;
 
     document.body.appendChild(this.toolbar);
@@ -128,6 +134,11 @@ export class Controls {
       this.generateFichaForPlane(e.detail.element);
     });
 
+    // Listen for plane toggled to regenerate ficha
+    this.board.addEventListener('planeToggled', (e) => {
+      this.generateFichaForPlane(e.detail.element);
+    });
+
     // Toolbar button events
     this.addPlaneBtn.addEventListener('click', () => {
       this.planes.addPlane();
@@ -161,6 +172,16 @@ export class Controls {
         const color = btn.dataset.color;
         if (color) this.planes.changeColor(color);
       });
+    });
+
+    // Direction buttons (rotation)
+    ['N', 'E', 'S', 'W'].forEach(dir => {
+      const btn = this.toolbar.querySelector(`[data-dir="${dir}"]`);
+      if (btn) {
+        btn.addEventListener('click', () => {
+          this.planes.rotate(dir);
+        });
+      }
     });
 
     // Callsign

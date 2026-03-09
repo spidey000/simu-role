@@ -123,3 +123,28 @@ export function savePositions(key, value) {
     // ignore
   }
 }
+
+/**
+ * Update METAR display
+ */
+export function actualizarMETAR() {
+  const metarEl = document.getElementById('metarLEAL');
+  if (!metarEl) return;
+
+  fetch(CONFIG.METAR_URL)
+    .then(res => res.text())
+    .then(data => {
+      metarEl.textContent = data.replace(/\n/g, ' ').trim();
+    })
+    .catch(() => {
+      metarEl.textContent = 'METAR unavailable';
+    });
+}
+
+/**
+ * Update RW (runway) ficha
+ */
+export function actualizarFichaRW() {
+  // Implementation depends on needs - placeholder
+  console.log('actualizar Ficha RW called');
+}

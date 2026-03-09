@@ -1,7 +1,7 @@
 // Planes module: manages airplane creation, selection, movement
 
 import { CONFIG } from './config.js';
-import { generarCallsignAleatorio } from './utils.js';
+import { generarCallsignAleatorio, clamp } from './utils.js';
 
 export class Planes {
   constructor(board) {
@@ -13,35 +13,9 @@ export class Planes {
   }
 
   setupEventListeners() {
-    // Add plane button
-    const addPlaneBtn = document.getElementById('addPlane');
-    if (addPlaneBtn) {
-      addPlaneBtn.addEventListener('click', () => this.addPlane());
-    }
-
-    // Apply callsign
-    const applyCallsignBtn = document.getElementById('applyCallsign');
-    if (applyCallsignBtn) {
-      applyCallsignBtn.addEventListener('click', () => this.applyCallsign());
-    }
-
-    // Generate callsign
-    const generateBtn = document.getElementById('generateCallsign');
-    if (generateBtn) {
-      generateBtn.addEventListener('click', () => {
-        const input = document.getElementById('callsignInput');
-        if (input) input.value = generarCallsignAleatorio();
-      });
-    }
-
     // Color buttons
     document.querySelectorAll('.colorBtn').forEach(btn => {
       btn.addEventListener('click', () => this.changeColor(btn.dataset.color));
-    });
-
-    // Direction buttons
-    document.querySelectorAll('#controls button[data-dir]').forEach(btn => {
-      btn.addEventListener('click', () => this.rotate(btn.dataset.dir));
     });
 
     // Keyboard controls
@@ -53,12 +27,6 @@ export class Planes {
         this.deleteSelected();
       }
     });
-
-    // Toggle vehicle (signalman)
-    const toggleVehicleBtn = document.getElementById('toggleVehicle');
-    if (toggleVehicleBtn) {
-      toggleVehicleBtn.addEventListener('click', () => this.toggleVehicle());
-    }
 
     // Deselect on board click
     this.board.addEventListener('mousedown', (e) => {
@@ -155,6 +123,7 @@ export class Planes {
     if (this.selected) {
       this.selected.classList.remove('selected');
       this.selected = null;
+      this.board.dispatchEvent(new CustomEvent('planeDeselected'));
     }
   }
 
@@ -206,6 +175,11 @@ export class Planes {
 
     // Re-apply selection handler
     this.setupSelection(this.selected);
+
+    // Notify to generate new ficha
+    this.board.dispatchEvent(new CustomEvent('planeToggled', {
+      detail: { planeId: this.selected.dataset.planeId, element: this.selected }
+    }));
   }
 
   deleteSelected() {

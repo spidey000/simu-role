@@ -22,6 +22,14 @@ export class Routes {
       this.onPlaneSelected(e.detail.planeId);
     });
 
+    // Listen for plane deselection to reset cursor
+    this.board.addEventListener('planeDeselected', () => {
+      if (this.isRouteMode) {
+        this.isRouteMode = false;
+        this.board.style.cursor = 'default';
+      }
+    });
+
     // Listen for plane movement to check checkpoint arrival
     this.board.addEventListener('planeDragged', (e) => {
       this.checkCheckpointArrival(e.detail.planeId);
