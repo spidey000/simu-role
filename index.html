@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tablero de Control Aéreo - Simulador Role Play</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <div id="board">
+    <!-- Info displays -->
+    <div id="metarLEAL">Cargando METAR...</div>
+    <div id="utcClock"></div>
+    <div id="eobtDisplay"></div>
+
+    <!-- Background image -->
+    <img id="bg" src="https://imgur.com/e64OqcA.jpg" alt="Fondo Aeropuerto">
+
+    <!-- Radar -->
+    <div id="radarContainer">
+      <img id="radarIcon" src="https://imgur.com/LsK1lHK.png" alt="Radar" />
+    </div>
+
+    <!-- Control Bay (will be populated by Controls module) -->
+    <div id="controlBay"></div>
+  </div>
+
+  <!-- Toolbar will be created dynamically by Controls module -->
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

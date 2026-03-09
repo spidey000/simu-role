@@ -1,0 +1,416 @@
+/* ===========================================
+   AIR TRAFFIC CONTROL SIMULATOR - STYLES
+   =========================================== */
+
+/* ROOT & RESET */
+:root {
+  --bg-glass: rgba(0, 0, 0, 0.6);
+  --panel-bg: linear-gradient(#f0f0f0, #d9d9d9);
+  --panel-border: 4px solid #999;
+  --btn-bg: #ccc;
+  --btn-border: 1px solid #666;
+  --slot-border: 0.5px solid #aaa;
+  --highlight: #FF4136;
+  --selection: 2px dashed var(--highlight);
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+}
+
+/* BOARD */
+#board {
+  width: 100vw;
+  height: calc(100vh - 60px);
+  position: relative;
+  border: 1px solid #333;
+  margin: 0 auto;
+  overflow: hidden;
+  user-select: none;
+}
+
+#bg {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+  filter: brightness(1);
+  transition: filter 0.3s ease, transform 0.3s ease;
+  transform-origin: center center;
+}
+
+/* SVG PATH LAYER (for routes) */
+#pathLayer {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 3;
+  pointer-events: none;
+}
+
+/* PLANES */
+.plane {
+  width: 42px;
+  height: 42px;
+  position: absolute;
+  cursor: grab;
+  user-select: none;
+  color: #FFFFFF;
+  z-index: 5;
+}
+
+.plane:active {
+  cursor: grabbing;
+}
+
+.plane svg {
+  width: 100%;
+  height: 100%;
+  fill: currentColor;
+  transform-origin: center center;
+  transition: transform 0.2s, color 0.2s;
+}
+
+.plane.selected {
+  outline: var(--selection);
+  z-index: 10;
+}
+
+.callsign {
+  position: absolute;
+  top: 44px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 22px;
+  color: #FFFFFF;
+  background: var(--bg-glass);
+  padding: 1px 4px;
+  border-radius: 2px;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+/* CHECKPOINTS */
+.checkpoint {
+  width: 48px;
+  height: 48px;
+  position: absolute;
+  cursor: pointer;
+  user-select: none;
+  color: #FFFFFF;
+  transition: transform 0.2s;
+}
+
+.checkpoint:hover {
+  transform: scale(1.1);
+}
+
+.checkpoint.active {
+  filter: drop-shadow(0 0 8px #00FFFF);
+}
+
+.checkpoint.completed {
+  opacity: 0.4;
+}
+
+.checkpoint.pending {
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+.checkpoint svg {
+  width: 100%;
+  height: 100%;
+  fill: currentColor;
+}
+
+.cpLabel {
+  position: absolute;
+  top: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 28px;
+  color: #FFFFFF;
+  background: var(--bg-glass);
+  padding: 1px 4px;
+  border-radius: 2px;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+/* TEXT MARKERS */
+.textmarker {
+  position: absolute;
+  font-size: 24px;
+  color: #FFFFFF;
+  background: var(--bg-glass);
+  padding: 1px 4px;
+  border-radius: 2px;
+  white-space: nowrap;
+  cursor: grab;
+}
+
+/* CONTROL BAY */
+#controlBay {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  width: auto;
+  min-width: 320px;
+  max-width: 720px;
+  height: auto;
+  max-height: 300px;
+  background: var(--panel-bg);
+  border: var(--panel-border);
+  border-radius: 6px;
+  box-shadow: 12px 12px 20px rgba(0,0,0,0.3);
+  display: flex;
+  flex-direction: row;
+  z-index: 10;
+  overflow: hidden;
+}
+
+#controlBay .column {
+  flex: 1;
+  border-right: 1px solid #999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 4px;
+  gap: 2px;
+}
+
+#controlBay .column:last-child {
+  border-right: none;
+}
+
+.slot {
+  width: 100%;
+  height: 32px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: var(--slot-border);
+}
+
+.slot:last-child {
+  border-bottom: none;
+}
+
+.control-btn {
+  width: 100%;
+  height: 100%;
+  font-size: 12px;
+  background: var(--btn-bg);
+  border: var(--btn-border);
+  border-radius: 4px;
+  cursor: grab;
+  margin: 0;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 8px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.control-btn:active {
+  cursor: grabbing;
+}
+
+/* TOP INFO DISPLAYS */
+#metarLEAL,
+#utcClock,
+#eobtDisplay {
+  position: absolute;
+  background: var(--bg-glass);
+  color: #fff;
+  padding: 6px 12px;
+  border-radius: 4px;
+  z-index: 25;
+  font-family: monospace;
+  pointer-events: none;
+}
+
+#metarLEAL {
+  top: 10px;
+  left: 10px;
+  font-size: 20px;
+  color: #00FF00;
+}
+
+#utcClock {
+  top: 10px;
+  left: 10px;
+  font-size: 20px;
+  margin-top: 60px;
+}
+
+#eobtDisplay {
+  top: 10px;
+  left: 10px;
+  font-size: 20px;
+  margin-top: 110px;
+  display: none;
+  white-space: nowrap;
+}
+
+/* RADAR */
+#radarContainer {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 200px;
+  height: 200px;
+  z-index: 1;
+  opacity: 0.8;
+  cursor: move;
+}
+
+#radarContainer img {
+  width: 100%;
+  height: 100%;
+  user-drag: none;
+  user-select: none;
+  pointer-events: none;
+}
+
+/* FLOATING TOOLBAR (compact menu) */
+#toolbar {
+  position: absolute;
+  top: 10px;
+  right: 220px;
+  background: var(--panel-bg);
+  border: var(--panel-border);
+  border-radius: 6px;
+  padding: 8px 12px;
+  display: flex;
+  gap: 8px;
+  z-index: 20;
+  box-shadow: 4px 4px 10px rgba(0,0,0,0.2);
+}
+
+#toolbar button {
+  padding: 6px 12px;
+  font-size: 13px;
+  background: var(--btn-bg);
+  border: var(--btn-border);
+  border-radius: 4px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+#toolbar button.active {
+  background: #007bff;
+  color: white;
+}
+
+#toolbar input[type="text"] {
+  padding: 6px 8px;
+  font-size: 13px;
+  border: 1px solid #999;
+  border-radius: 4px;
+  width: 120px;
+}
+
+.colorBtn {
+  width: 24px;
+  height: 24px;
+  border: 1px solid #333;
+  display: inline-block;
+  cursor: pointer;
+  vertical-align: middle;
+}
+
+/* MODAL PANELS */
+.panel {
+  position: absolute;
+  background: white;
+  border: 2px solid #666;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  padding: 12px;
+  min-width: 250px;
+  z-index: 30;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+}
+
+.panel.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #ddd;
+  cursor: move;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.panel-close {
+  cursor: pointer;
+  font-size: 18px;
+  line-height: 1;
+}
+
+.panel-content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.panel-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.panel-row label {
+  font-size: 13px;
+  min-width: 80px;
+}
+
+.panel-row select,
+.panel-row input {
+  flex: 1;
+  padding: 4px 8px;
+  border: 1px solid #999;
+  border-radius: 4px;
+  font-size: 13px;
+}
+
+/* QUICK ACTION BUTTONS */
+.quick-btn {
+  padding: 4px 8px;
+  font-size: 12px;
+  background: #e0e0e0;
+  border: 1px solid #999;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.quick-btn:hover {
+  background: #d0d0d0;
+}

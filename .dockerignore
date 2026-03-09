@@ -1,0 +1,40 @@
+# Git
+.git
+.gitignore
+
+# Node modules
+node_modules
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Build
+dist
+build
+
+# Docker
+Dockerfile*
+docker-compose*
+
+# Documentation
+*.md
+!README.md
+
+# Tests
+test/
+tests/
+
+# Misc
+.cache
+tmp
+temp
